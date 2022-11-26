@@ -4,9 +4,9 @@ access: "{{ access }}"  #  秘钥别名
 
 vars: # 全局变量
   region: "{{ region }}" # 来自 publish.yaml Parameters 参数定义, 更多关于变量的使用方法，可以参考：https://www.serverless-devs.com/serverless-devs/yaml#变量赋值
-  # service:
-  #   name: "{{ serviceName }}"
-  #   description: 欢迎使用 ServerlessTool
+  service:
+    name: "{{ serviceName }}"
+    description: 欢迎使用 ServerlessTool
 
 services:
   function-vapor: #  服务名称
@@ -20,10 +20,7 @@ services:
       #     path: ./
     props: #  组件的属性值
       region: ${vars.region} # 关于变量的使用方法，可以参考：https://www.serverless-devs.com/serverless-devs/yaml#变量赋值
-      # service: ${vars.service}
-      service:
-        name: "{{ serviceName }}"
-        description: 欢迎使用 ServerlessTool
+      service: ${vars.service}
       function:
         name: "{{ functionName }}" # 函数名
         description: 这是一个 vapor 案例
@@ -35,7 +32,9 @@ services:
         handler: index.handler
         timeout: 30
         memorySize: 128
-        runtime: custom
+        cpu: 0.05
+        runtime: custom.debian10
+        instanceConcurrency: 5
       triggers:
         - name: httpTrigger
           type: http
@@ -52,3 +51,28 @@ services:
               methods:
                 - GET
                 - POST
+  keep-warm: # 辅助函数, 2 min 定时预热
+    component: fc # 组件名称
+    actions:
+      post-deploy:
+        - component: fc invoke
+    props: # 组件的属性值
+      region: ${vars.region}
+      service: ${vars.service}
+      function:
+        name: keep-warm
+        description: 'Serverless Devs Web Framework Helper Function'
+        codeUri: './keep-warm'
+        handler: index.handler
+        runtime: python3
+        timeout: 120
+        memorySize: 128
+        environmentVariables:
+          KEEP_WARM_URL: ${function-vapor.output.url.system_url}
+      triggers:
+        - name: timerTrigger
+          type: timer
+          config:
+            cronExpression: '@every 2m'
+            enable: false
+# END

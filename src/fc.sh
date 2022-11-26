@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# 构建镜像，指定 Dockerfile 文件路径 `./Dockerfile.build`, 指定构建上下文目录 `./hello`
-docker build --target build -t fc-vapor-app -f ./Dockerfile.build ./hello
+# 构建镜像，指定 Dockerfile 文件路径 `./hello/Dockerfile`, 指定构建上下文目录 `./hello`
+docker build --target build -t fc-vapor-app -f ./hello/Dockerfile ./hello
 
 # 复制构建产物
 docker run --rm -it \

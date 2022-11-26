@@ -13,7 +13,11 @@ cd start-vapor && s deploy -y
 ```
 
 <devgroup>
+
 ## 开发者社区
+
+组件中心
+https://github.com/Serverless-Devs/registry-cli
 
 您如果有关于错误的反馈或者未来的期待，您可以在 [Serverless Devs repo Issues](https://github.com/serverless-devs/serverless-devs/issues) 中进行反馈和交流。如果您想要加入我们的讨论组或者了解 FC 组件的最新动态，您可以通过以下渠道进行：
 
