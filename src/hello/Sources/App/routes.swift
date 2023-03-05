@@ -5,7 +5,7 @@ func routes(_ app: Application) throws {
     
     app.get { req async throws -> View in
         let ip: String = req.peerAddress?.ipAddress ?? "Vapor"
-        return try await req.view.render("index", ["title": "Hello \(ip)"])
+        return try await req.view.render("index.html", ["title": "Hello \(ip)"])
     }
 
     app.get("hello") { req async -> String in

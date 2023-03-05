@@ -4,13 +4,18 @@
 docker build --target build -t fc-vapor-app -f ./hello/Dockerfile ./hello
 
 # 复制构建产物
-docker run --rm -it \
+# docker create --name extract fc-vapor-app
+# docker cp extract:/app pkg
+# chmod -R 775 pkg
+# docker rm -f extract
+docker run --rm  \
 -w /workspace \
 -v $(pwd):/workspace \
 fc-vapor-app \
 bash -c "\
     rm -rf pkg \
-    && cp -r /staging pkg"
+    && cp -r /staging pkg \
+    && chmod -R 775 pkg"
 
 # 添加启动文件
 touch ./pkg/scf_bootstrap && chmod +x ./pkg/scf_bootstrap

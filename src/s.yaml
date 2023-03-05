@@ -7,6 +7,7 @@ vars: # 全局变量
   service:
     name: "{{ serviceName }}"
     description: 欢迎使用 ServerlessTool
+    role: 'acs:ram::${config(AccountID)}:role/AliyunFcDefaultRole'
 
 services:
   function-vapor: #  服务名称
@@ -24,17 +25,18 @@ services:
       function:
         name: "{{ functionName }}" # 函数名
         description: 这是一个 vapor 案例
-        codeUri: ./pkg
         cAPort: 9000
-        customRuntimeConfig:
-          command:
-            - ./scf_bootstrap
-        handler: index.handler
         timeout: 30
         memorySize: 128
         cpu: 0.05
-        runtime: custom.debian10
+        diskSize: 512
         instanceConcurrency: 5
+        runtime: custom.debian10
+        customRuntimeConfig:
+          command:
+            - ./scf_bootstrap
+        codeUri: ./pkg
+        handler: index.handler
       triggers:
         - name: httpTrigger
           type: http
