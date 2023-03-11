@@ -41,6 +41,21 @@ cd start-vapor && s deploy -y -t ./s.yaml -a fc-access --use-local
 -y 在交互时，默认选择y
 ```
 
+### 按镜像部署函数(写自己的镜像地址)
+
+```
+export imageurl="registry-xxx.cn-hongkong.aliyuncs.com/xxx/fc-vapor:$(date +%F-%H-%M-%S)"
+
+s deploy -t ./s.container.yaml -a fc-access --use-local -y
+
+```
+
+### 按二进制部署
+
+```
+s deploy -t ./s.yaml -a fc-access --use-local -y
+```
+
 ## 参考
 
 > <https://docs.serverless-devs.com/fc/command/deploy>

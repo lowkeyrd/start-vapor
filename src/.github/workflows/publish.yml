@@ -18,4 +18,9 @@ jobs:
       - run: npm install
       - run: npm install -g @serverless-devs/s
       - run: s config add --AccessKeyID ${{secrets.AccessKeyID}} --AccessKeySecret ${{secrets.AccessKeySecret}} -a fc-access -f
-      - run: s deploy -t ./s.yaml -a fc-access --use-local -y
+      # 这里是部署
+      - name: deploy
+        run: |
+          export imageurl="${{ secrets.REPOSITORY }}:$(date +%F-%H-%M-%S)"
+          s deploy -t ./s.yaml -a fc-access --use-local -y
+# END
