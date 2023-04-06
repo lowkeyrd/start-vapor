@@ -24,3 +24,4 @@ s cli registry publish
 - 0.0.6 更新 `swift` 版本
 - 0.0.7 添加二进制部署
 - 0.0.8 容器部署
+- 0.0.11 修复 github 平台同步

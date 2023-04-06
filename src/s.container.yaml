@@ -13,7 +13,7 @@ services:
       function:
         name: "${vars.functionName}_container" # 函数名
         description: 这是一个 vapor 案例
-        cAPort: 9000
+        cAPort: 8080
         timeout: 30
         memorySize: 128
         cpu: 0.1
