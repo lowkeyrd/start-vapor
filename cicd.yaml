@@ -83,6 +83,19 @@ spec:
     runAfters:
     # 需要在pre-check执行后才执行
     - name: pre-check
+  # 镜像构建
+  - name: build-image
+    context:
+      data:
+        enable: true
+        build:
+          image: registry-vpc.cn-hangzhou.aliyuncs.com/fc-demo2/fengchong-test:<%.git.shortCommitId%>
+          instanceId: ""
+          dockerfile: ./src/hello/Dockerfile
+    taskTemplate: build-image-task
+    runAfters:
+    # 需要在pre-check执行后才执行
+    - name: pre-check-approval
   # 构建并部署
   - name: build-and-deploy
     context:
@@ -101,10 +114,11 @@ spec:
           - plugin: "@serverless-cd/s-setup"
           # 执行s-deploy
           - run: |
-              s deploy -t "s.yaml" --use-local --assume-yes --skip-push
+              export GIT_COMMIT_ID=<%.git.shortCommitId%>
+              s deploy -t "${deploy_file}" --use-local --assume-yes --skip-push
               echo "Deploy by Serverless Devs success."
     taskTemplate: serverless-runner-task
     # 执行顺序，当前任务执行依赖runAfters任务都执行成功
     runAfters:
-    # 在approval后执行
-    - name: pre-check-approval
+    # 在build-image后执行
+    - name: build-image
