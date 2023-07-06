@@ -7,7 +7,7 @@ vars: # 全局变量
   service:
     name: "fc-docker-demo-service"
     description: 欢迎使用 ServerlessTool
-    # role: 'acs:ram::${config(AccountID)}:role/AliyunFcDefaultRole'
+    role: 'acs:ram::${config(AccountID)}:role/AliyunFcDefaultRole'
   functionName: "demo-function"
 
 services:
