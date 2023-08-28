@@ -115,6 +115,7 @@ spec:
           # 执行s-deploy
           - run: |
               export GIT_COMMIT_ID=<%.git.shortCommitId%>
+              export runtime="${{ ctx.data.envVars.xxxx || 'default value' }}"
               s deploy -t "${{ ctx.data.deployFile }}" --use-local --assume-yes --skip-push
               echo "Deploy by Serverless Devs success."
     taskTemplate: serverless-runner-task
