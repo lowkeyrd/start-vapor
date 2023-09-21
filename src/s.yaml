@@ -3,7 +3,7 @@ name: functionApp       #  项目名称
 access: "default"  #  秘钥别名
 
 vars: # 全局变量
-  region: "cn-hangzhou" # 来自 publish.yaml Parameters 参数定义, 更多关于变量的使用方法，可以参考：https://www.serverless-devs.com/serverless-devs/yaml#变量赋值
+  region: "ap-southeast-1" # 来自 publish.yaml Parameters 参数定义, 更多关于变量的使用方法，可以参考：https://www.serverless-devs.com/serverless-devs/yaml#变量赋值
   service:
     name: "fc-docker-demo-service"
     description: 欢迎使用 ServerlessTool
