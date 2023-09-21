@@ -52,7 +52,7 @@ spec:
           mountPoints:
             - enableTLS: false
               serverAddr: 7335849b45-hqf65.ap-southeast-1.nas.aliyuncs.com:/application-test
-              mountDir: /kaniko
+              mountDir: /mnt/auto
         cpu: 4
         memory: 8192
         timeout: 1800
@@ -105,18 +105,18 @@ spec:
     # 需要在pre-check执行后才执行
     - name: pre-check
   # 镜像构建
-  - name: build-image
-    context:
-      data:
-        enable: true
-        build:
-          image: registry-vpc.cn-hangzhou.aliyuncs.com/fc-demo2/fengchong-test:<%.git.shortCommitId%>
-          instanceId: ""
-          dockerfile: ./src/hello/Dockerfile
-    taskTemplate: build-image-task
-    runAfters:
-    # 需要在pre-check执行后才执行
-    - name: pre-check-approval
+  # - name: build-image
+  #   context:
+  #     data:
+  #       enable: true
+  #       build:
+  #         image: registry-vpc.cn-hangzhou.aliyuncs.com/fc-demo2/fengchong-test:<%.git.shortCommitId%>
+  #         instanceId: ""
+  #         dockerfile: ./src/hello/Dockerfile
+  #   taskTemplate: build-image-task
+  #   runAfters:
+  #   # 需要在pre-check执行后才执行
+  #   - name: pre-check-approval
   # 构建并部署
   - name: build-and-deploy
     context:
@@ -142,4 +142,4 @@ spec:
     # 执行顺序，当前任务执行依赖runAfters任务都执行成功
     runAfters:
     # 在build-image后执行
-    - name: build-image
+    - name: pre-check-approval
