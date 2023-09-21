@@ -56,7 +56,7 @@ spec:
         cpu: 4
         memory: 8192
         timeout: 1800
-        # debugMode: true
+        debugMode: true
         environmentVariables:
           DEBUG: '*'
   # 要执行的任务，默认所有任务会一同尝试执行
