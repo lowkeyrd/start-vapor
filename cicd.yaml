@@ -37,6 +37,28 @@ spec:
       # 环境名称，推荐不同的环境使用不同的流水线模板
       envName: test
       deployFile: src/s.container.yaml
+      runnerConfig:
+        regionId: ap-southeast-1
+        logConfig:
+          logstore: serverless-application-9402efc249556e5b
+          project: serverless-application-9402efc249556e5b
+        vpcConfig:
+          securityGroupId: sg-t4najwsfsvhbqv74ur3x
+          vSwitchIds: ["vsw-t4n2ggi2w7dyt5lvvw72t"]
+          vpcId: vpc-t4nism8kix55znon23xyk
+        nasConfig: 
+          groupId: 0
+          userId: 0
+          mountPoints:
+            - enableTLS: false
+              serverAddr: 7335849b45-hqf65.ap-southeast-1.nas.aliyuncs.com:/application-test
+              mountDir: /kaniko
+        cpu: 4
+        memory: 8192
+        timeout: 1800
+        # debugMode: true
+        environmentVariables:
+          DEBUG: '*'
   # 要执行的任务，默认所有任务会一同尝试执行
   # 执行会满足runAfters引入的先后约束，任务必须在runAfters声明的任务执行完毕后才可以被执行
   # 用户可以使用此特性，达到DAG描述的效果
@@ -51,7 +73,6 @@ spec:
         # 同样可以在此处声明钉钉告警配置，修改告警模板
         # dingdingNotification:
         # 同样可以在此处声明或修改RunnerConfig
-        # runnerConfig:
         # 执行步骤。下述步骤将会采用开源项目serverless-cd提供的engine进行执行
         steps:
           # 第一步，checkout代码
